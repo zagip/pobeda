@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #080705;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Roboto Slab', serif;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        .error-text {
+            color: #FF8000;
+            font-size: 10vw;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            text-shadow: 1px 0px 2px rgba(255, 128, 0, 1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .error-message {
+            color: #fac0b4;
+            font-size: 1.5em;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .home-link {
+            margin-top: 30px;
+            color: #b4fac0;
+            text-decoration: none;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border: 2px solid #b4fac0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .home-link:hover {
+            background-color: #b4fac0;
+            color: #080705;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-text">ошибочка</div>
+    <p class="error-message">загипы облажались (либо ты облажался)</p>
+    <a href="/" class="home-link">Вернуться на главную</a>
+</body>
+</html>

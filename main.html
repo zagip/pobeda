@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загипычи Победа</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+        @font-face {
+            font-family: 'Unispace';
+            src: url('https://fonts.cdnfonts.com/css/unispace') format('woff2');
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body {
+            color: #ffcc00;
+            text-align: center;
+        }
+
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100px;
+            color: #ffcc00;
+            font-family: 'Unispace', monospace;
+            font-size: 1.2em;
+            text-align: center;
+            animation: fall linear infinite;
+            white-space: nowrap;
+            opacity: 0.7;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        .year-section {
+            margin: 3px 0;
+            border-radius: 10px;
+        }
+        .z:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease-in-out;
+            backdrop-filter: blur(8px);
+        }
+        .z {
+            transition: transform 0.3s ease-in-out;
+            background-color: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(4px);
+        }
+        .z::-webkit-scrollbar {
+            display: none;
+        }
+        :root {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            -webkit-scrollbar {
+                display: none;
+            }
+        }
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+        .victory-button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: #ffcc00;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px 0;
+            font-family: 'Rubik', sans-serif;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        .victory-button:hover {
+            transform: scale(1.05);
+            backdrop-filter: blur(8px);
+        }
+        .scrolling-content {
+            animation: scroll 60s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain"></div>
+    <div class="content-wrapper">
+        <img src="https://zagip.ru/zagipichi_logo.png" alt="Загипычи Logo" class="logo z">
+        <h1>Загипычи Победа</h1>
+
+        <div class="z" style="height: 5vh; margin: 20px auto;
+                    padding: 15px; display: flex; justify-content: center; align-items: center;
+                color: #ffcc00; background-color: rgba(26, 26, 26, 0.8); border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+            <h3>Загипычи побеждают уже <span id="years">0</span> года</h3>
+            <script>
+                function updateYears() {
+                    const years = ((new Date() - new Date('2022-01-01')) / (1000 * 60 * 60 * 24 * 365.25));
+                    document.getElementById('years').textContent = years.toFixed(8);
+                }
+                updateYears();
+                setInterval(updateYears, 100);
+            </script>
+        </div>
+
+        <button class="victory-button" onclick="celebrate()">Побеждать с нами</button>
+
+        <div class="z" style="height: 50vh; padding: 15px; overflow: hidden;
+                color: #ffcc00; background-color: rgba(26, 26, 26, 0.8); border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); margin: 20px auto;">
+            <div class="scrolling-content" id="monthsContainer">
+                <script>
+                    function generateMonths() {
+                        const container = document.getElementById('monthsContainer');
+                        const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+                        const startDate = new Date(2022, 8);
+                        const currentDate = new Date();
+                        
+                        while (startDate <= currentDate) {
+                            const yearSection = document.createElement('div');
+                            yearSection.className = 'year-section';
+                            const year = startDate.getFullYear();
+                            yearSection.innerHTML = `<h2>${year}</h2>`;
+                            
+                            months.forEach((month, index) => {
+                                if (startDate.getFullYear() === year) {
+                                    if (new Date(year, index) <= currentDate && new Date(year, index) >= new Date(2022, 8)) {
+                                        yearSection.innerHTML += `<p>${month} ${year} - Загипычи побеждают!</p>`;
+                                    }
+                                }
+                            });
+                            
+                            container.appendChild(yearSection);
+                            startDate.setFullYear(startDate.getFullYear() + 1);
+                        }
+                        // Duplicate content for seamless scrolling
+                        container.innerHTML += container.innerHTML;
+                    }
+                    generateMonths();
+                </script>
+            </div>
+        </div>
+
+        <div style="width: 40vh; margin: 0 auto;">
+            <video autoplay loop muted style="width: 100%;">
+                <source src="1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div style="width: 40vh; margin: 0 auto;">
+            <video autoplay loop muted style="width: 100%;">
+                <source src="2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <footer style="text-align: center; margin-top: 20px;">
+            <p>© <script>document.write(new Date().getFullYear())</script> Загипычи Official. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script>
+        const words = ['Загипычи', 'Талимыч', 'Стручпик', 'Алешка', 'Таракантул', 'Пепез', 'Белив', 'выйди', 'зайди', 'победа', 'z', 'гойда', 'видел', '52', 'ZOV'];
+        
+        function createMatrixRain() {
+            const container = document.querySelector('.matrix-rain');
+            const columnCount = Math.floor(window.innerWidth / 50);
+
+            for (let i = 0; i < columnCount; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = `${i * 50}px`;
+                column.textContent = words[Math.floor(Math.random() * words.length)];
+                column.style.animationDuration = `${Math.random() * 5 + 3}s`;
+                column.style.animationDelay = `${Math.random() * 2}s`;
+                container.appendChild(column);
+
+                column.addEventListener('animationend', () => {
+                    column.textContent = words[Math.floor(Math.random() * words.length)];
+                    column.style.animationDuration = `${Math.random() * 5 + 3}s`;
+                    column.style.animation = 'none';
+                    column.offsetHeight;
+                    column.style.animation = null;
+                });
+            }
+        }
+
+        function celebrate() {
+            const defaults = {
+                spread: 360,
+                ticks: 100,
+                gravity: 0.5,
+                decay: 0.94,
+                startVelocity: 30,
+                colors: ['#ffcc00', '#ffd633', '#ffdb4d', '#ffe066', '#ffe680', '#ffeb99']
+            };
+
+            function shoot() {
+                confetti({
+                    ...defaults,
+                    particleCount: 50,
+                    scalar: 1.2,
+                    shapes: ['circle']
+                });
+            }
+
+            for(let i = 0; i < 5; i++) {
+                setTimeout(shoot, i * 200);
+            }
+
+            setTimeout(() => {
+                window.location.href = 'https://zagip.ru';
+            }, 2000);
+        }
+
+        createMatrixRain();
+        window.addEventListener('resize', () => {
+            const container = document.querySelector('.matrix-rain');
+            container.innerHTML = '';
+            createMatrixRain();
+        });
+    </script>
+</body>
+</html>
